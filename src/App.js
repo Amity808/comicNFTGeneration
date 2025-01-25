@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NFTStorage, File } from 'nft.storage'
-import { Buffer } from 'buffer';
 import { ethers } from 'ethers';
-import axios from 'axios';
 import Form from './components/form';
 // Components
 import Spinner from 'react-bootstrap/Spinner';
