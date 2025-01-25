@@ -5,7 +5,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ToastContainer } from 'react-toastify';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
 
