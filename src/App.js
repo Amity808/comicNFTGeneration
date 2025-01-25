@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Navigation from './components/Navigation';
 import NFTAbi from './abis/NFT.json'
 import config from './config.json';
+import { toast } from 'react-toastify'
 
 
 function App() {
@@ -13,13 +14,18 @@ function App() {
   const [account, setAccount] = useState(null)
   const [contract, setContract] = useState(null)
 
-  const NFTAddress = ""
+  
 
 
   const loadBlockchainData = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
     const network = await provider.getNetwork()
+    if (!config[network.chainId]) {
+      toast.error('This network is not supported.')
+      return;
+    }
+    
     const comicNft = new ethers.Contract(config[network.chainId].nft.address, NFTAbi, provider)
     setContract(comicNft)
 

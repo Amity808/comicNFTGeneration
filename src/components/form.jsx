@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Buffer } from "buffer";
 
 import { PinataSDK } from "pinata-web3";
+import { toast } from "react-toastify";
 
 const pinata = new PinataSDK({
   pinataJwt: process.env.REACT_APP_PINTA_JWT,
@@ -15,17 +16,31 @@ const Form = ({ provider, contract }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [url, setUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
+
+
   const submitHandler = async (e) => {
     // Your code here to create and mint the NFT
     e.preventDefault();
+    setIsLoading(true);
+    try {
+     
 
     const imageData = await createImage();
     // const url = await updloadImage(imageData)
 
     const pinta = await uploadToPinta(imageData);
     await mintComic(pinta)
+    toast.success("Successfully minted comic image")
 
     console.log("pinta", pinta);
+    setIsLoading(false)
+    return;
+    } catch (error) {
+      setIsLoading(false)
+      return;
+      
+    }
     // console.log(url, "url");
   };
 
@@ -54,6 +69,7 @@ const Form = ({ provider, contract }) => {
     const data = response.data;
 
     if (!data) {
+      toast.error("Failed to generate comic image")
       throw new Error("No data received from the API");
     }
 
@@ -80,6 +96,7 @@ const Form = ({ provider, contract }) => {
       const url = `https://gold-thorough-bobolink-856.mypinata.cloud/ipfs/${uploadJson.IpfsHash}`
 
       setUrl(url);
+      
       return url;
     } catch (error) {
       console.log(error);
@@ -97,6 +114,7 @@ const Form = ({ provider, contract }) => {
     });
     await tx.wait()
     console.log("minting completed")
+    toast.success("Successfully minted comic image")
     } catch (error) {
       
     }
