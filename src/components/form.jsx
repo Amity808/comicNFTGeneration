@@ -10,7 +10,7 @@ const pinata = new PinataSDK({
   pinataGateway: process.env.REACT_APP_PINTA_API_KEY_DOMAIN,
 });
 
-const Form = () => {
+const Form = ({ provider, contract }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -23,6 +23,7 @@ const Form = () => {
     // const url = await updloadImage(imageData)
 
     const pinta = await uploadToPinta(imageData);
+    await mintComic(pinta)
 
     console.log("pinta", pinta);
     // console.log(url, "url");
@@ -79,14 +80,27 @@ const Form = () => {
       const url = `https://gold-thorough-bobolink-856.mypinata.cloud/ipfs/${uploadJson.IpfsHash}`
 
       setUrl(url);
-      return uploadJson;
+      return url;
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(url, "url");
 
   
+  const mintComic = async (tokenURI) => {
+    try {
+      console.log("minting minting...")
+
+    const signer = await provider.getSigner()
+    const tx = await contract.connect(signer).mint(tokenURI,{
+      value: 1
+    });
+    await tx.wait()
+    console.log("minting completed")
+    } catch (error) {
+      
+    }
+  }
 
   
 

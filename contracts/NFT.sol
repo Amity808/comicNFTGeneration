@@ -5,12 +5,20 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract NFT is ERC721URIStorage {
+contract ComicNFT is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     address public owner;
     uint256 public cost;
+    uint256 public promptLen;
+
+    struct Prompts {
+        string prompts;
+        string tokenURI;
+    }
+
+    mapping(uint256 => Prompts) _prompts;
 
     constructor(
         string memory _name,
@@ -29,6 +37,9 @@ contract NFT is ERC721URIStorage {
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
+        // _prompts[promptLen] = Prompts()
+
+
     }
 
     function totalSupply() public view returns (uint256) {
