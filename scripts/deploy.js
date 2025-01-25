@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  const NAME = "AI Generated NFT"
+  const NAME = "AI Generated Comic NFT"
   const SYMBOL = "AINFT"
   const COST = ethers.utils.parseUnits("1", "ether") // 1 ETH
 
@@ -18,3 +18,5 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+// 0x3aC6CEE7D7819d2c54DC20DE73A2E106bD848b17

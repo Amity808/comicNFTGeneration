@@ -3,7 +3,7 @@ import { NFTStorage, File } from 'nft.storage'
 import { Buffer } from 'buffer';
 import { ethers } from 'ethers';
 import axios from 'axios';
-
+import Form from './components/form';
 // Components
 import Spinner from 'react-bootstrap/Spinner';
 import Navigation from './components/Navigation';
@@ -30,7 +30,7 @@ function App() {
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
-      <p>Edit App.js to get started.</p>
+      <Form />
 
     </div>
   );
