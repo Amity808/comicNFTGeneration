@@ -29,7 +29,7 @@ contract ComicNFT is ERC721URIStorage {
         cost = _cost;
     }
 
-    function mint(string memory tokenURI) public payable {
+    function mint(string memory tokenURI, string memory _prompt) public payable {
         require(msg.value >= cost);
 
         _tokenIds.increment();
@@ -37,7 +37,7 @@ contract ComicNFT is ERC721URIStorage {
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
-        // _prompts[promptLen] = Prompts()
+        _prompts[promptLen] = Prompts(_prompt, tokenURI);
 
 
     }
